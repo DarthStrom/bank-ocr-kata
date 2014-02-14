@@ -8,7 +8,7 @@ describe('ocr', function () {
         "| |\n" +
         "|_|\n" +
         "   "
-    )).toBe(0);
+    )).toBe('0');
   });
 
   it('recognizes one', function () {
@@ -17,6 +17,15 @@ describe('ocr', function () {
         "  |\n" +
         "  |\n" +
         "   "
-    )).toBe(1);
+    )).toBe('1');
+  });
+
+  it('converts a line of zeroes', function () {
+    expect(ocr.convert(
+        " _  _  _  _  _  _  _  _  _ \n" +
+        "| || || || || || || || || |\n" +
+        "|_||_||_||_||_||_||_||_||_|\n" +
+        "                           "
+    )).toBe('000000000');
   });
 });

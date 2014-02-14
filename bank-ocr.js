@@ -46,11 +46,25 @@ var PATTERNS = {
 function getDigit(pattern) {
   for (var digit in PATTERNS) {
     if (PATTERNS[digit].join('') === pattern) {
-      return parseInt(digit, 10);
+      return digit;
     }
   }
 }
 
+function splitIntoDigits(text) {
+  var digits = [];
+  var lines = text.split('\n');
+  for (var digitNumber = 0; digitNumber < lines[0].length; digitNumber += 3) {
+    var digit = '';
+    for (var lineNumber = 0; lineNumber < lines.length; lineNumber++) {
+      digit += lines[lineNumber].substr(digitNumber, 3);
+    }
+    digits.push(digit);
+  }
+  return digits;
+}
+
 exports.convert = function (text) {
-  return getDigit(text.replace(/\n/gm, ''));
+  var digits = splitIntoDigits(text);
+  return digits.map(getDigit).join('');
 };
