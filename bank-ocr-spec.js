@@ -78,4 +78,12 @@ describe('ocr', function () {
       "888888888\n" +
       "999999999");
   });
+
+  it('can validate an account number', function () {
+    expect(ocr.isValid('345882865')).toBe(true);
+  });
+
+  it('can detect an invalid account number', function () {
+    expect(ocr.isValid('987654321')).toBe(false);
+  });
 });

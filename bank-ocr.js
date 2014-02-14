@@ -64,6 +64,11 @@ function getPatterns(entry) {
   return patterns;
 }
 
+function getAccountNumber(entry) {
+  var patterns = getPatterns(entry);
+  return patterns.map(getDigit).join('');
+}
+
 function getEntries(text) {
   var entries = [];
   var lines = text.split("\n");
@@ -77,12 +82,16 @@ function getEntries(text) {
   return entries;
 }
 
-function getAccountNumber(entry) {
-  var patterns = getPatterns(entry);
-  return patterns.map(getDigit).join('');
-}
-
 exports.convert = function (text) {
   var entries = getEntries(text);
   return entries.map(getAccountNumber).join('\n');
+};
+
+exports.isValid = function(accountNumber) {
+  var digits = accountNumber.split('');
+  var sum = 0;
+  for (var i = 0; i < 9; i++) {
+    sum += (9 - i) * digits[i];
+  }
+  return sum % 11 === 0;
 };
