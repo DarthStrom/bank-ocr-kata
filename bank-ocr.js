@@ -49,6 +49,7 @@ function getDigit(pattern) {
       return digit;
     }
   }
+  return '?';
 }
 
 function getPatterns(entry) {
@@ -66,7 +67,11 @@ function getPatterns(entry) {
 
 function getAccountNumber(entry) {
   var patterns = getPatterns(entry);
-  return patterns.map(getDigit).join('');
+  var accountNumber = patterns.map(getDigit).join('');
+  if (accountNumber.indexOf('?') !== -1) {
+    return accountNumber + ' ILL';
+  }
+  return accountNumber
 }
 
 function getEntries(text) {

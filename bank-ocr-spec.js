@@ -86,4 +86,13 @@ describe('ocr', function () {
   it('can detect an invalid account number', function () {
     expect(ocr.isValid('987654321')).toBe(false);
   });
+
+  it('prints ILL when an account numer has an invalid pattern', function () {
+    expect(ocr.convert(
+        "    _  _  _  _  _  _     _ \n" +
+        "|_||_|| || ||_   |  |  | _ \n" +
+        "  | _||_||_||_|  |  |  | _|\n" +
+        "                           "
+    )).toBe('49006771? ILL');
+  });
 });
