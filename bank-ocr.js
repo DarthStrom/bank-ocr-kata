@@ -51,17 +51,17 @@ function getDigit(pattern) {
   }
 }
 
-function getDigits(entry) {
-  var digits = [];
+function getPatterns(entry) {
+  var patterns = [];
   var lines = entry.split('\n');
-  for (var digitNumber = 0; digitNumber < lines[0].length; digitNumber += 3) {
-    var digit = '';
+  for (var patternNumber = 0; patternNumber < lines[0].length; patternNumber += 3) {
+    var pattern = '';
     for (var lineNumber = 0; lineNumber < lines.length; lineNumber++) {
-      digit += lines[lineNumber].substr(digitNumber, 3);
+      pattern += lines[lineNumber].substr(patternNumber, 3);
     }
-    digits.push(digit);
+    patterns.push(pattern);
   }
-  return digits;
+  return patterns;
 }
 
 function getEntries(text) {
@@ -78,8 +78,8 @@ function getEntries(text) {
 }
 
 function getAccountNumber(entry) {
-  var digits = getDigits(entry);
-  return digits.map(getDigit).join('');
+  var patterns = getPatterns(entry);
+  return patterns.map(getDigit).join('');
 }
 
 exports.convert = function (text) {
