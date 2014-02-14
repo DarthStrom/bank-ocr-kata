@@ -51,9 +51,9 @@ function getDigit(pattern) {
   }
 }
 
-function splitIntoDigits(text) {
+function getDigits(entry) {
   var digits = [];
-  var lines = text.split('\n');
+  var lines = entry.split('\n');
   for (var digitNumber = 0; digitNumber < lines[0].length; digitNumber += 3) {
     var digit = '';
     for (var lineNumber = 0; lineNumber < lines.length; lineNumber++) {
@@ -64,7 +64,25 @@ function splitIntoDigits(text) {
   return digits;
 }
 
-exports.convert = function (text) {
-  var digits = splitIntoDigits(text);
+function getEntries(text) {
+  var entries = [];
+  var lines = text.split("\n");
+  for (var entryNumber = 0; entryNumber < lines.length; entryNumber += 4) {
+    var entry = '';
+    for (var entryLine = 0; entryLine < 4; entryLine++) {
+      entry += lines[entryNumber + entryLine] + "\n";
+    }
+    entries.push(entry);
+  }
+  return entries;
+}
+
+function getAccountNumber(entry) {
+  var digits = getDigits(entry);
   return digits.map(getDigit).join('');
+}
+
+exports.convert = function (text) {
+  var entries = getEntries(text);
+  return entries.map(getAccountNumber).join('\n');
 };
