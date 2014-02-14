@@ -8,7 +8,7 @@ describe('ocr', function () {
         "| |\n" +
         "|_|\n" +
         "   "
-    )).toBe('0');
+    )).toBe('0 ERR');
   });
 
   it('recognizes one', function () {
@@ -17,7 +17,7 @@ describe('ocr', function () {
         "  |\n" +
         "  |\n" +
         "   "
-    )).toBe('1');
+    )).toBe('1 ERR');
   });
 
   it('converts a line of zeroes', function () {
@@ -68,15 +68,15 @@ describe('ocr', function () {
         " _| _| _| _| _| _| _| _| _|\n" +
         "                           "
     )).toBe(
-      "111111111\n" +
-      "222222222\n" +
-      "333333333\n" +
-      "444444444\n" +
-      "555555555\n" +
-      "666666666\n" +
-      "777777777\n" +
-      "888888888\n" +
-      "999999999");
+      "111111111 ERR\n" +
+      "222222222 ERR\n" +
+      "333333333 ERR\n" +
+      "444444444 ERR\n" +
+      "555555555 ERR\n" +
+      "666666666 ERR\n" +
+      "777777777 ERR\n" +
+      "888888888 ERR\n" +
+      "999999999 ERR");
   });
 
   it('can validate an account number', function () {
@@ -87,12 +87,21 @@ describe('ocr', function () {
     expect(ocr.isValid('987654321')).toBe(false);
   });
 
-  it('prints ILL when an account numer has an invalid pattern', function () {
+  it('prints ILL when an account number has an invalid pattern', function () {
     expect(ocr.convert(
         "    _  _  _  _  _  _     _ \n" +
         "|_||_|| || ||_   |  |  | _ \n" +
         "  | _||_||_||_|  |  |  | _|\n" +
         "                           "
     )).toBe('49006771? ILL');
+  });
+
+  it('prints ERR when an account number is not valid', function () {
+    expect(ocr.convert(
+        "                           \n" +
+        "  |  |  |  |  |  |  |  |  |\n" +
+        "  |  |  |  |  |  |  |  |  |\n" +
+        "                           "
+    )).toBe('111111111 ERR');
   });
 });

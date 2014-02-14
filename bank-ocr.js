@@ -70,6 +70,8 @@ function getAccountNumber(entry) {
   var accountNumber = patterns.map(getDigit).join('');
   if (accountNumber.indexOf('?') !== -1) {
     return accountNumber + ' ILL';
+  } else if (!exports.isValid(accountNumber)) {
+    return accountNumber + ' ERR';
   }
   return accountNumber
 }
